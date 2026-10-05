@@ -6,7 +6,11 @@
 import SwiftUI
 
 struct LessonFormView: View {
-    @State private var viewModel = LessonFormViewModel()
+    @State private var viewModel: LessonFormViewModel
+
+    init(viewModel: LessonFormViewModel) {
+        _viewModel = State(initialValue: viewModel)
+    }
 
     var body: some View {
         NavigationStack {
@@ -16,7 +20,7 @@ struct LessonFormView: View {
                 }
 
                 Section("Descripción") {
-                    TextEditor(text: $viewModel.desc)
+                    TextEditor(text: $viewModel.detailsDescription)
                         .frame(height: 200)
                         .scrollContentBackground(.hidden)
                 }
@@ -60,8 +64,4 @@ struct LessonFormView: View {
             }
         }
     }
-}
-
-#Preview {
-    LessonFormView()
 }
