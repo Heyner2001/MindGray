@@ -6,16 +6,22 @@ import Foundation
 
 @Observable
 final class LessonFormViewModel {
+    private let repository: LessonRepository
+
     var title: String = ""
-    var desc: String = ""
+    var detailsDescription: String = ""
     var reference: String = ""
     var details: [String] = []
 
     var newDetail: String = ""
 
+    init(repository: LessonRepository) {
+        self.repository = repository
+    }
+
     var canSave: Bool {
         !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        !desc.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        !detailsDescription.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     func addDetail() {
@@ -37,14 +43,18 @@ final class LessonFormViewModel {
 
     func save() {
         guard canSave else { return }
-        // Por ahora solo registramos en consola; la persistencia se añadirá en la siguiente fase.
-        print("Lesson guardada:", title, desc, details, reference)
-        reset()
+        let lesson = Lesson(title: title, detailsDescription: detailsDescription, reference: reference, details: details)
+        do {
+            try repository.create(lesson)
+            reset()
+        } catch {
+            print("Error al guardar la lección:", error)
+        }
     }
 
     func reset() {
         title = ""
-        desc = ""
+        detailsDescription = ""
         reference = ""
         details = []
         newDetail = ""
