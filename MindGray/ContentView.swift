@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    private let factory = LessonRepositoryFactory()
+    private let viewModel: LessonFormViewModel
+
+    init(viewModel: LessonFormViewModel) {
+        self.viewModel = viewModel
+    }
 
     var body: some View {
-        LessonFormView(viewModel: LessonFormViewModel(repository: factory.make()))
+        LessonFormView(viewModel: viewModel)
     }
 }

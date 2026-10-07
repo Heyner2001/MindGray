@@ -24,6 +24,9 @@ Personal journal app ("journey app") for reflections and wisdom.
 - Follow SOLID and Clean Code principles.
 - Prefer consistency with the existing codebase over introducing new patterns or abstractions.
 
+## Code conventions
+Before writing or modifying code, read and follow `CODE_CONVENTIONS.md`.
+
 ## Memory
 - When you start, read 'MEMORY.md' to know the actual state of the project
 - When you finish any task, update 'MEMORY.md'

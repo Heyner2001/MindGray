@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct MindGrayApp: App {
+    private let repositoryFactory = LessonRepositoryFactory()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: LessonFormViewModel(repository: repositoryFactory.make()))
         }
     }
 }
