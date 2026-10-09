@@ -15,21 +15,21 @@ final class SwiftDataLessonRepository: LessonRepository {
 
     func fetchAll() throws -> [Lesson] {
         let descriptor = FetchDescriptor<Lesson>(sortBy: [SortDescriptor(\.creationDate, order: .reverse)])
-        return try context.fetch(descriptor)
+        return try self.context.fetch(descriptor)
     }
 
     func create(_ lesson: Lesson) throws {
-        context.insert(lesson)
-        try context.save()
+        self.context.insert(lesson)
+        try self.context.save()
     }
 
     func update(_ lesson: Lesson) throws {
         lesson.lastUpdated = Date()
-        try context.save()
+        try self.context.save()
     }
 
     func delete(_ lesson: Lesson) throws {
-        context.delete(lesson)
-        try context.save()
+        self.context.delete(lesson)
+        try self.context.save()
     }
 }

@@ -17,6 +17,7 @@ Personal journal app ("journey app") for reflections and wisdom.
 
 ## How you must work
 - Do only what is explicitly asked. **Do not add features or functionality on your own.**
+- When you start a new feature, you must create a new branch.
 - When you finish a task, review your changes.
 - If you have questions or need clarification, ask the user before proceeding.
  - Ask a maximum of 6 questions at a time.
@@ -26,6 +27,7 @@ Personal journal app ("journey app") for reflections and wisdom.
 
 ## Code conventions
 Before writing or modifying code, read and follow `CODE_CONVENTIONS.md`.
+Keep it to no more than ~50 lines.
 
 ## Memory
 - When you start, read 'MEMORY.md' to know the actual state of the project

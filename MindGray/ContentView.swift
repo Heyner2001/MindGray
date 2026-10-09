@@ -8,13 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    private let viewModel: LessonFormViewModel
+    private let repository: LessonRepository
+    @State private var listViewModel: LessonListViewModel
 
-    init(viewModel: LessonFormViewModel) {
-        self.viewModel = viewModel
+    init(repository: LessonRepository) {
+        self.repository = repository
+        _listViewModel = State(initialValue: LessonListViewModel(repository: repository))
     }
 
     var body: some View {
-        LessonFormView(viewModel: viewModel)
+        Group {
+            if listViewModel.lessons.isEmpty {
+                let formViewModel = LessonFormViewModel(repository: repository)
+                LessonFormView(viewModel: formViewModel)
+                    .onAppear {
+                        formViewModel.onSaved = { listViewModel.reload() }
+                    }
+            } else {
+                LessonListView(viewModel: listViewModel, repository: repository)
+            }
+        }
+        .onAppear { listViewModel.reload() }
     }
 }

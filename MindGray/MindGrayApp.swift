@@ -13,7 +13,7 @@ struct MindGrayApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: LessonFormViewModel(repository: repositoryFactory.make()))
+            ContentView(repository: repositoryFactory.make())
         }
     }
 }
