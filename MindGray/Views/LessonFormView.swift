@@ -7,6 +7,7 @@ import SwiftUI
 
 struct LessonFormView: View {
     @State private var viewModel: LessonFormViewModel
+    @Environment(\.dismiss) private var dismiss
 
     init(viewModel: LessonFormViewModel) {
         _viewModel = State(initialValue: viewModel)
@@ -58,7 +59,12 @@ struct LessonFormView: View {
             .navigationTitle("Nueva lección")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Guardar", action: viewModel.save)
+                    Button("Guardar") {
+                        viewModel.save()
+                        if case .editing = viewModel.mode {
+                            dismiss()
+                        }
+                    }
                         .disabled(!viewModel.canSave)
                 }
             }
