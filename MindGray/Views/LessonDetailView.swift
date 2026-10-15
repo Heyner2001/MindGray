@@ -16,35 +16,55 @@ struct LessonDetailView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: SpacingTokens.lg) {
                 Text(lesson.title)
-                    .font(.title)
-                    .bold()
+                    .font(TypographyTokens.displayLarge)
+                    .foregroundStyle(ColorTokens.textPrimary)
+                    .padding(.top, SpacingTokens.xxl)
 
                 Text(lesson.detailsDescription)
+                    .font(TypographyTokens.body)
+                    .foregroundStyle(ColorTokens.textPrimary)
+                    .lineSpacing(SpacingTokens.sm)
 
                 if !lesson.reference.isEmpty {
-                    Text(lesson.reference)
-                        .foregroundStyle(.secondary)
+                    quotation(lesson.reference)
                 }
 
                 if !lesson.details.isEmpty {
-                    Text("Detalles")
-                        .font(.headline)
-                    ForEach(lesson.details, id: \.self) { detail in
-                        Text("• \(detail)")
+                    VStack(alignment: .leading, spacing: SpacingTokens.md) {
+                        Text("Detalles")
+                            .font(TypographyTokens.sectionTitle)
+                            .foregroundStyle(ColorTokens.textPrimary)
+
+                        ForEach(lesson.details, id: \.self) { detail in
+                            HStack(alignment: .top, spacing: SpacingTokens.sm) {
+                                Circle()
+                                    .strokeBorder(ColorTokens.accentNatural, lineWidth: StrokeTokens.fine)
+                                    .frame(width: 7, height: 7)
+                                    .padding(.top, SpacingTokens.xs)
+
+                                Text(detail)
+                                    .font(TypographyTokens.body)
+                                    .foregroundStyle(ColorTokens.textPrimary)
+                            }
+                        }
                     }
+                    .padding(.top, SpacingTokens.sm)
                 }
 
                 Text(lesson.creationDate, style: .date)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .font(TypographyTokens.caption)
+                    .foregroundStyle(ColorTokens.textSecondary)
+                    .padding(.top, SpacingTokens.sm)
             }
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(SpacingTokens.screenMargin)
+            .frame(maxWidth: SpacingTokens.readingWidth, alignment: .leading)
+            .frame(maxWidth: .infinity)
         }
-        .navigationTitle("Detalle")
+        .background(ColorTokens.canvas.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.visible, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
@@ -53,6 +73,8 @@ struct LessonDetailView: View {
                 } label: {
                     Image(systemName: "ellipsis.circle")
                 }
+                .tint(ColorTokens.textSecondary)
+                .accessibilityLabel("Opciones")
             }
         }
         .sheet(isPresented: $showEdit) {
@@ -73,5 +95,20 @@ struct LessonDetailView: View {
         } message: {
             Text("Esta acción no se puede deshacer.")
         }
+    }
+
+    /// The reference reads as a quotation: serif text marked by a fine leading rule.
+    private func quotation(_ text: String) -> some View {
+        HStack(alignment: .top, spacing: SpacingTokens.md) {
+            Rectangle()
+                .fill(ColorTokens.accentWarm.opacity(0.5))
+                .frame(width: StrokeTokens.hairline)
+
+            Text(text)
+                .font(TypographyTokens.quote)
+                .foregroundStyle(ColorTokens.textSecondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .fixedSize(horizontal: false, vertical: true)
     }
 }

@@ -28,6 +28,8 @@ struct ContentView: View {
                 LessonListView(viewModel: listViewModel, repository: repository)
             }
         }
+        .background(ColorTokens.canvas.ignoresSafeArea())
+        .preferredColorScheme(.light)
         .onAppear { listViewModel.reload() }
     }
 }
